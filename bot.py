@@ -5,13 +5,15 @@ import requests
 import pytesseract
 from os import system as cmd
 from pyrogram.types import InlineKeyboardMarkup , InlineKeyboardButton , ReplyKeyboardMarkup , CallbackQuery , ForceReply
-from pdf2image import convert_from_path
 import shutil
+import pypdfium2 as pdfium
+
+
 bot = Client(
     "pdfserv5115",
     api_id=17983098,
     api_hash="ee28199396e0925f1f44d945ac174f64",
-    bot_token="6448510263:AAFDxuNH03euMQmtxyiD_ZTKcIxzjIcDbmM"
+    bot_token="6280972722:AAG3GrropPJhZvfjljtgppKeeXpfpBVZG4Y"
 )
 @bot.on_message(filters.command('start') & filters.private)
 def command1(bot,message):
@@ -36,9 +38,20 @@ def _telegram_file(client, message):
   nom,ex = os.path.splitext(filename)
   noim = f"{nom}.txt"
   cmd('mkdir temp')
-  pdf_images = convert_from_path(file_path)
-  for idx in range(len(pdf_images)):
-    pdf_images[idx].save('./temp/pdf_page_'+ str(idx+1) +'.png', 'PNG')
+  pdf = pdfium.PdfDocument(file_path)
+  n_pages = len(pdf)
+  for page_number in range(n_pages):
+    page = pdf.get_page(page_number)
+    pil_image = page.render_topil(
+        scale=1,
+        rotation=0,
+        crop=(0, 0, 0, 0),
+        colour=(255, 255, 255, 255),
+        annotations=True,
+        greyscale=False,
+        optimise_mode=pdfium.OptimiseMode.NONE,
+    )
+    pil_image.save(f"./temp/image_{page_number+1}.png")
   shutil.rmtree('./downloads/') 
   count = 0
   for path in os.listdir("./temp/"):
@@ -48,7 +61,7 @@ def _telegram_file(client, message):
   coca=1
   final = numbofitems 
   while (coca < final): 
-    cmd(f'''sh textcleaner -g "./temp/pdf_page_{coca}.png" temp.png ''')
+    cmd(f'''sh textcleaner -g "./temp/image_{coca}.png" temp.png ''')
     lang_code = "ara"
     data_url = f"https://github.com/tesseract-ocr/tessdata/raw/main/{lang_code}.traineddata"
     dirs = r"/usr/share/tesseract-ocr/4.00/tessdata"
