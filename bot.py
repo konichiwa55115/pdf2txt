@@ -43,9 +43,10 @@ def _telegram_file(client, message):
     open(path, 'wb').write(data.content)
     text = pytesseract.image_to_string(f"temp.png" , lang=f"{lang_code}")
     textspaced = re.sub(r'\r\n|\r|\n', ' ', text)
-    with open(final,'a') as f:
+    with open("final.txt",'a') as f:
       f.write(f'''{textspaced} \n''')
     coca +=1
+  cmd(f'''mv final.txt "{noim}"''')
   with open(noim, 'rb') as f:
          bot.send_document(user_id, f)
   shutil.rmtree('./temp/') 
