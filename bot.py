@@ -13,8 +13,21 @@ bot = Client(
     api_hash="ee28199396e0925f1f44d945ac174f64",
     bot_token="6448510263:AAFDxuNH03euMQmtxyiD_ZTKcIxzjIcDbmM"
 )
+@bot.on_message(filters.command('start') & filters.private)
+def command1(bot,message):
+    bot.send_message(message.chat.id, " السلام عليكم , أنا بوت تفريغ المستندات , فقط أرسل بي دي إف",disable_web_page_preview=True)
+
 @bot.on_message(filters.private & filters.incoming & filters.document )
 def _telegram_file(client, message):
+  try: 
+    with open('final.txt', 'r') as fh:
+        if os.stat('final.txt').st_size == 0: 
+            pass
+        else:
+            sent_message = message.reply_text('هناك عملية تتم الآن , انتظر فضلاً  ', quote=True)
+            return
+  except FileNotFoundError: 
+    pass  
   user_id = message.from_user.id 
   file = message.document
   file_path = message.download(file_name="./downloads/")
