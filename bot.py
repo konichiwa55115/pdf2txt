@@ -20,6 +20,7 @@ def _telegram_file(client, message):
   file_path = message.download(file_name="./downloads/")
   filename = os.path.basename(file_path)
   nom,ex = os.path.splitext(filename)
+  final = f"{nom}.txt"
   cmd('mkdir temp')
   pdf_images = convert_from_path(file_path)
   for idx in range(len(pdf_images)):
@@ -42,7 +43,7 @@ def _telegram_file(client, message):
     open(path, 'wb').write(data.content)
     text = pytesseract.image_to_string(f"temp.png" , lang=f"{lang_code}")
     textspaced = re.sub(r'\r\n|\r|\n', ' ', text)
-    with open('final.txt','a') as f:
+    with open(final,'a') as f:
       f.write(f'''{textspaced} \n''')
     coca +=1
   with open("final.txt", 'rb') as f:
