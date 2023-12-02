@@ -28,6 +28,7 @@ def _telegram_file(client, message):
             return
   except FileNotFoundError: 
     pass  
+  sent_message = message.reply_text('جار التفريغ .. ', quote=True)    
   user_id = message.from_user.id 
   file = message.document
   file_path = message.download(file_name="./downloads/")
