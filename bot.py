@@ -20,7 +20,7 @@ def _telegram_file(client, message):
   file_path = message.download(file_name="./downloads/")
   filename = os.path.basename(file_path)
   nom,ex = os.path.splitext(filename)
-  final = f"{nom}.txt"
+  noim = f"{nom}.txt"
   cmd('mkdir temp')
   pdf_images = convert_from_path(file_path)
   for idx in range(len(pdf_images)):
@@ -46,7 +46,7 @@ def _telegram_file(client, message):
     with open(final,'a') as f:
       f.write(f'''{textspaced} \n''')
     coca +=1
-  with open(final, 'rb') as f:
+  with open(noim, 'rb') as f:
          bot.send_document(user_id, f)
   shutil.rmtree('./temp/') 
 
