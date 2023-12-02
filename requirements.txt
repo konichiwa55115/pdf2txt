@@ -1,0 +1,7 @@
+pyrogram
+tgcrypto
+pyromod
+requests
+pytesseract
+Pillow
+pdf2image
