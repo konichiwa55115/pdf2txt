@@ -33,7 +33,7 @@ def _telegram_file(client, message):
   coca=1
   final = numbofitems 
   while (coca < final): 
-    cmd(f'''./textcleaner -g "./temp/pdf_page_{coca}.png" temp.png ''')
+    cmd(f'''sudo ./textcleaner -g "./temp/pdf_page_{coca}.png" temp.png ''')
     lang_code = "ara"
     data_url = f"https://github.com/tesseract-ocr/tessdata/raw/main/{lang_code}.traineddata"
     dirs = r"/usr/share/tesseract-ocr/4.00/tessdata"
