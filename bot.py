@@ -46,7 +46,7 @@ def _telegram_file(client, message):
     with open(final,'a') as f:
       f.write(f'''{textspaced} \n''')
     coca +=1
-  with open("final.txt", 'rb') as f:
+  with open(final, 'rb') as f:
          bot.send_document(user_id, f)
   shutil.rmtree('./temp/') 
 
